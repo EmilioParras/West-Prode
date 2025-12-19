@@ -1,0 +1,21 @@
+<div class="fixture-container">
+  <h2>Próximos Partidos - Premier League</h2>
+
+  <div *ngFor="let partido of partidos" class="match-card">
+    <div class="team">
+      <img [src]="partido.homeLogo" width="30" alt="">
+      <span>{{ partido.homeTeam }}</span>
+    </div>
+
+    <div class="vs"> VS </div>
+
+    <div class="team">
+      <span>{{ partido.awayTeam }}</span>
+      <img [src]="partido.awayLogo" width="30" alt="">
+    </div>
+
+    <div class="date">
+      {{ partido.matchDate | date:'short' }}
+    </div>
+  </div>
+</div>
