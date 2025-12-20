@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Para usar *ngFor en el HTML
+import { CommonModule } from '@angular/common';
 import { Match } from '../../services/match';
+import { ActivatedRoute } from '@angular/router'; // Para que se pueda leer el parámetro de la ruta
 
 @Component({
   selector: 'app-fixture',
@@ -11,15 +12,21 @@ import { Match } from '../../services/match';
 })
 
 export class FixtureComponent implements OnInit {
-  // Aquí guardaremos los partidos que vengan del backend
   partidos: Match[] = [];
 
   // Inyectamos el servicio en el constructor
-  constructor(private matchService: Match) {}
+  constructor(
+    private matchService: Match,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    // Al iniciar el componente, pedimos los partidos de la Premier League
-    this.cargarPartidos('PL');
+    this.route.params.subscribe(params => {
+      const leagueCode = params['leagueCode']; // Obtenemos el código de la liga desde la URL
+      if (leagueCode) {
+        this.cargarPartidos(leagueCode);
+      }
+    })
   }
 
   cargarPartidos(codigo: string): void {
