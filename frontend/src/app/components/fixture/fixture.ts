@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Match } from '../../services/match';
-import { ActivatedRoute } from '@angular/router'; // Para que se pueda leer el parámetro de la ruta
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-fixture',
@@ -17,14 +17,15 @@ export class FixtureComponent implements OnInit {
   // Inyectamos el servicio en el constructor
   constructor(
     private matchService: Match,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const leagueCode = params['leagueCode']; // Obtenemos el código de la liga desde la URL
-      if (leagueCode) {
-        this.cargarPartidos(leagueCode);
+      const code = params['leagueCode']; // Obtenemos el código de la liga desde la URL
+      if (code) {
+        this.cargarPartidos(code);
       }
     })
   }
@@ -34,6 +35,7 @@ export class FixtureComponent implements OnInit {
       next: (data) => {
         this.partidos = data;
         console.log('✅ Partidos recibidos en el Frontend:', this.partidos);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('❌ Error al traer partidos:', err);
