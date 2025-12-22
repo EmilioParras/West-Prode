@@ -1,7 +1,14 @@
 <header class="main-header">
-    <div></div>
-    <div class="logo">
-        <a routerLink="/">Prode App</a>
-    </div>
-    <div></div>
+  <button class="menu-btn" (click)="toggleHamburguer()">
+    <fa-icon [icon]="iconoHamburguesa"></fa-icon>
+  </button>
+
+  <div class="logo">
+        <h1>Prodemoss</h1>
+  </div>
+
+  <button class="menu-btn" (click)="toggleUserProfile()">
+    <fa-icon [icon]="iconoUserProfile"></fa-icon>
+  </button>
+
 </header>
