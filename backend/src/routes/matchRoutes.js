@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router(); 
 const prisma = require('../config/db');
-const { syncMatches } = require('../services/footbalService');
+const { getGamesCompetition } = require('../services/footballService');
 
 // DICCIONARIO DE CÓDIGOS A NOMBRES
 const leagueNames = {
@@ -31,7 +31,7 @@ router.get('/:code', async (req, res) => {
         // 2. Si NO hay partidos en la DB, los sincronizamos automáticamente
         if (matches.length === 0) {
             console.log(`Buscando datos nuevos para ${fullLeagueName}...`);
-            await syncMatches(code);
+            await getGamesCompetition(code);
             
             // Volvemos a consultar la DB ahora que ya están guardados
             matches = await prisma.match.findMany({
