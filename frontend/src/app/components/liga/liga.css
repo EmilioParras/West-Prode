@@ -5,8 +5,9 @@
 }
 
 h2 {
+  color: black;
   margin-bottom: 2rem;
-  font-weight: 300;
+  font-weight: 00;
   letter-spacing: 1px;
 }
 
@@ -17,32 +18,21 @@ h2 {
 }
 
 .liga-card {
-  background-color: #1a1a1a;
+  background-color: #ffffff;
   border-radius: 15px;
-  padding: 30px;
+  padding: 20px;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-  border: 1px solid #333;
-}
-
-.liga-card:active {
-  transform: scale(0.98); /* Efecto de presión en el dedo */
-  border-color: #00ff88;
-}
-
-.liga-icon {
-  font-size: 3rem;
-  margin-bottom: 10px;
+  border: 1px solid #000000;
 }
 
 .liga-card h3 {
   margin: 5px 0;
-  color: #00ff88;
+  color: #000000;
 }
 
 .liga-card p {
-  color: #888;
-  font-size: 0.9rem;
+  color: #494949;
+  font-size: 1rem;
 }
 
 .liga-emblem {
@@ -57,14 +47,6 @@ h2 {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  /* Filtro opcional para que brillen un poco más en fondo oscuro */
-  filter: drop-shadow(0 0 5px rgba(255,255,255,0.1));
-}
-
-.liga-card h3 {
-  font-size: 1.1rem;
-  color: #00ff88;
-  margin: 10px 0 5px 0;
 }
 
 .loader {
@@ -73,7 +55,7 @@ h2 {
   align-items: center;
   justify-content: center;
   padding: 50px;
-  color: #00ff88;
+  color: #000000;
 }
 
 /* El círculo que gira */
@@ -93,7 +75,6 @@ h2 {
   }
 }
 
-/* Para tablets y PC */
 @media (min-width: 768px) {
   .ligas-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

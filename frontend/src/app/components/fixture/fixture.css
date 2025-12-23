@@ -1,27 +1,39 @@
+.fixture-container {
+  padding: 20px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .match-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 15px;
-  border-bottom: 1px solid #ccc;
-  max-width: 600px;
+  border: 1px solid #000000;
+  max-width: 800px;
+  min-width: 100px;
+  width: 100%;
   margin: 10px auto;
-  background: #f9f9f9;
+  background: #ffffff;
 }
 
 .team { 
   display: flex; 
   align-items: center;
+  justify-content: flex-end;
   gap: 10px; 
   width: 40%; 
+  font-size: 16px;
 }
 
-.vs { 
+.line { 
   font-weight: bold; 
   color: #666; 
 }
 
-.date { 
-  font-size: 0.8rem; 
-  color: #999; 
+.team-away {
+  justify-content: flex-start;
 }

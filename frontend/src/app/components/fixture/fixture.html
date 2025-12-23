@@ -1,21 +1,18 @@
 <div class="fixture-container">
-  <h2>Próximos Partidos</h2>
+  <h2>Partidos del Día</h2>
 
   <div *ngFor="let partido of partidos" class="match-card">
     <div class="team">
-      <img [src]="partido.homeLogo" width="30" alt="">
       <span>{{ partido.homeTeam }}</span>
+      <img [src]="partido.homeLogo" width="30" alt="">
     </div>
 
-    <div class="vs"> VS </div>
+    <div class="line"> - </div>
 
-    <div class="team">
+    <div class="team team-away">
+      <img [src]="partido.awayLogo" width="30line" alt="">
       <span>{{ partido.awayTeam }}</span>
-      <img [src]="partido.awayLogo" width="30" alt="">
     </div>
 
-    <div class="date">
-      {{ partido.matchDate | date:'short' }}
-    </div>
   </div>
 </div>
