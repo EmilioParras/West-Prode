@@ -35,30 +35,13 @@ router.get('/competitions', async (req, res) => {
 router.get('/fixture/:code', async (req, res) => {
     try {
         const code = req.params.code.toUpperCase();
-        const fullLeagueName = leagueNames[code];
+        const { fecha } = req.query;
 
-        if (!fullLeagueName) {
+        if (!leagueNames[code]) {
             return res.status(404).json({ error: "Código de liga no soportado o inválido." });
         }
 
-        // 1. Busca los partidos en la DB primero
-        let matches = await prisma.match.findMany({
-            where: { leagueName: fullLeagueName },
-            orderBy: { matchDate: 'asc' }
-        });
-
-        // 2. Si NO hay partidos en la DB, los trae desde la API externa
-        if (matches.length === 0) {
-            console.log(`Buscando datos nuevos para ${fullLeagueName}...`);
-            await getGamesCompetition(code);
-            
-            // Consultamos la DB ahora que ya están guardados
-            matches = await prisma.match.findMany({
-                where: { leagueName: fullLeagueName },
-                orderBy: { matchDate: 'asc' }
-            });
-        }
-
+        const matches = await getGamesCompetition(code, fecha);
         res.json(matches);
 
     } catch (error) {

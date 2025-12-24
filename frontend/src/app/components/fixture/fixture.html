@@ -1,5 +1,10 @@
 <div class="fixture-container">
-  <h2>Partidos del Día</h2>
+
+  <div class="no-matches" *ngIf="partidos.length === 0">
+    <p>No hay partidos programados para el día de hoy en esta competición.</p>
+  </div>
+
+  <h2 *ngIf="partidos.length != 0" >Partidos del Día</h2>
 
   <div *ngFor="let partido of partidos" class="match-card">
     <div class="team">

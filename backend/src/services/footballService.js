@@ -4,51 +4,51 @@ const prisma = require('../config/db');
 const API_URL = 'https://api.football-data.org/v4/';
 const API_KEY = process.env.FOOTBALL_API_KEY;
 
-const getGamesCompetition = async (competitionCode) => { // Trae los partidos de una competicion
+// DICCIONARIO DE CÓDIGOS A NOMBRES
+const leagueNames = {
+    'WC': 'Fifa World Cup',
+    'CL': 'UEFA Champions League',
+    'BL1': 'Bundesliga',
+    'DED': 'Eredivisie',
+    'BSA': 'Campeonato Brasileiro Serie A',
+    'PD': 'Primera Division',
+    'FL1': 'Ligue 1',
+    'ELC': 'Championship',
+    'PPL': 'Primeira Liga',
+    'EC': 'European Championship',
+    'SA': 'Serie A',
+    'PL': 'Premier League'
+};
+
+const getGamesCompetition = async (competitionCode) => {
   try {
-    const response = await axios.get(`${API_URL}competitions/${competitionCode}/matches`, { 
-      headers: { 'X-Auth-Token': API_KEY }
+    const hoySimulado = new Date('2025-12-27T10:00:00');
+    const startOfDay = new Date(hoySimulado);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(hoySimulado);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const fullLeagueName = leagueNames[competitionCode.toUpperCase()]
+
+    let matches = await prisma.match.findMany({
+      where: {
+        leagueName: fullLeagueName,
+        matchDate: {
+          gte: startOfDay,
+          lte: endOfDay
+        }
+      },
+      orderBy: { matchDate: 'asc' }
     });
 
-    const matches = response.data.matches;
-    const leagueName = response.data.competition.name;
-
-    for (const m of matches) {
-      await prisma.match.upsert({
-        where: { apiMatchId: m.id },
-        update: {
-          status: m.status,
-          homeGoals: m.score.fullTime.home,
-          awayGoals: m.score.fullTime.away,
-          matchDate: new Date(m.utcDate)
-        },
-        create: {
-          apiMatchId: m.id,
-          leagueName: leagueName,
-          homeTeam: m.homeTeam.name,
-          awayTeam: m.awayTeam.name,
-          homeLogo: m.homeTeam.crest,
-          awayLogo: m.awayTeam.crest,
-          matchDate: new Date(m.utcDate),
-          status: m.status,
-          homeGoals: m.score.fullTime.home,
-          awayGoals: m.score.fullTime.away 
-        }
-      });
+    if (matches.length === 0) {
+      console.log(`No hay partidos en la DB para ${fullLeagueName} el día de hoy. Consultando API externa...`);
     }
+    return matches;
 
-    return {
-      succes: true,
-      message: `Se sincronizaron ${matches.length} partidos de ${leagueName}`
-    };
-
-  
   } catch (error) {
     console.error("❌ Error en getGamesCompetition:", error.message);
-    return { 
-      success: false, 
-      error: error.response?.data?.message || error.message 
-    };
+    throw error;
   }
 };
 

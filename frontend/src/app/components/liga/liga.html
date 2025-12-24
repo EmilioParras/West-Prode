@@ -1,5 +1,5 @@
 <div class="ligas-container">
-    <h2>Competiciones disponibles para realizar pronosticos.</h2>
+    <h2 *ngIf="!loading">Competiciones disponibles para realizar pronosticos.</h2>
 
     <div *ngIf="loading" class="loader">
         <div class="spinner"></div>
