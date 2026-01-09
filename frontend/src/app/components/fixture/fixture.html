@@ -1,11 +1,19 @@
 <div class="fixture-container">
-
-  <div class="no-matches" *ngIf="partidos.length === 0">
-    <p>No hay partidos programados para el dia de hoy!</p>
+  
+  <div class="fecha-encabezado">
+    <button class="fecha-btn" (click)="previousDay()">
+      <fa-icon [icon]="faChevronLeft"></fa-icon>
+    </button>
+    
+    <h2>{{ selectedDate | date:'d/M/yyyy' }}</h2>
+    
+    <button class="fecha-btn" (click)="nextDay()">
+      <fa-icon [icon]="faChevronRight"></fa-icon>
+    </button>
   </div>
 
-  <div class="fecha-encabezado" *ngIf="partidos.length > 0">
-    <h2>{{ partidos[0].matchDate | date:'d/M/yyyy' }}</h2>
+  <div class="no-matches" *ngIf="partidos.length === 0">
+    <p>No hay partidos programados para el dia seleccionado!</p>
   </div>
 
   <div class="games-container">

@@ -31,6 +31,11 @@ export class MatchService {
     return this.http.get<Match[]>(`${this.API_URL}/fixture/${code}`);
   }
 
+  getMatchesByLeagueAndDate(code: string, fecha: string): Observable<Match[]> {
+    // fecha debe ser formato YYYY-MM-DD
+    return this.http.get<Match[]>(`${this.API_URL}/fixture/${code}?fecha=${fecha}`);
+  }
+
   getAvaibleLeagues(): Observable<any> { // Trae las ligas disponibles en la API con el el plan FREE
     return this.http.get<any>(`${this.API_URL}/competitions`);
   }

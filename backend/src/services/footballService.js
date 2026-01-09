@@ -4,7 +4,6 @@ const prisma = require('../config/db');
 const API_URL = 'https://api.football-data.org/v4/';
 const API_KEY = process.env.FOOTBALL_API_KEY;
 
-// DICCIONARIO DE CÓDIGOS A NOMBRES
 const leagueNames = {
     'WC': 'Fifa World Cup',
     'CL': 'UEFA Champions League',
@@ -20,15 +19,25 @@ const leagueNames = {
     'PL': 'Premier League'
 };
 
-const getGamesCompetition = async (competitionCode) => {
+const getGamesCompetition = async (competitionCode, fecha) => {
   try {
-    const today = new Date();
-    const startOfDay = new Date(today);
+    let targetDate;
+    
+    if (fecha) {
+      // Si recibe fecha se parsea (formato YYYY-MM-DD)
+      const [year, month, day] = fecha.split('-').map(Number);
+      targetDate = new Date(year, month - 1, day);
+    } else {
+      // Si no recibe fecha se usa la fecha actual
+      targetDate = new Date();
+    }
+
+    const startOfDay = new Date(targetDate);
     startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(today);
+    const endOfDay = new Date(targetDate);
     endOfDay.setHours(23, 59, 59, 999);
 
-    const fullLeagueName = leagueNames[competitionCode.toUpperCase()]
+    const fullLeagueName = leagueNames[competitionCode.toUpperCase()];
 
     let matches = await prisma.match.findMany({
       where: {
@@ -42,7 +51,7 @@ const getGamesCompetition = async (competitionCode) => {
     });
 
     if (matches.length === 0) {
-      console.log(`No hay partidos en la DB para ${fullLeagueName} el día de hoy. Consultando API externa...`);
+      console.log(`No hay partidos en la DB para ${fullLeagueName} el día ${startOfDay.toISOString().slice(0,10)}.`);
     }
     return matches;
 
@@ -52,7 +61,7 @@ const getGamesCompetition = async (competitionCode) => {
   }
 };
 
-const getAvaibleLeagues = async() => { // Trae las ligas disponibles en la API con el plan FREE
+const getAvaibleLeagues = async() => {
   try {
     const response = await axios.get(`${API_URL}competitions`, {
       headers: { 'X-Auth-Token': API_KEY }
@@ -64,4 +73,4 @@ const getAvaibleLeagues = async() => { // Trae las ligas disponibles en la API c
   }
 };
 
-module.exports = { getGamesCompetition, getAvaibleLeagues }; // Exporto las funciones para usarlas.
+module.exports = { getGamesCompetition, getAvaibleLeagues };
