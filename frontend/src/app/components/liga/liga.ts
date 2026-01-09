@@ -22,13 +22,28 @@ export class LigaComponent implements OnInit{
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
+ ngOnInit(): void {
     this.matchService.getAvaibleLeagues().subscribe({
       next: (response) => {
-        console.log("Ligas recibidas:", response);
         this.ligas = response.competitions.filter((c: any) => 
           this.ligasPermitidas.includes(c.code)
-        );
+        ).map((c: any) => ({ ...c, matchesCount: null })); // inicializo matchesCount
+
+        // Para cada liga pido el fixture de hoy y guardo el conteo
+        this.ligas.forEach((liga) => {
+          this.matchService.getMatchesByLeague(liga.code).subscribe({
+            next: (data: any[]) => {
+              liga.matchesCount = Array.isArray(data) ? data.length : 0;
+              this.cdr.detectChanges();
+            },
+            error: (err) => {
+              console.error(`Error al traer partidos para ${liga.code}:`, err);
+              liga.matchesCount = 0;
+              this.cdr.detectChanges();
+            }
+          });
+        });
+
         this.loading = false;
         this.cdr.detectChanges(); 
       },

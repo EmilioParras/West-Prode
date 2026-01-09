@@ -35,6 +35,12 @@ h2 {
   font-size: 1rem;
 }
 
+.liga-card .matches-count {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #424242;
+}
+
 .liga-emblem {
   height: 100px;
   display: flex;

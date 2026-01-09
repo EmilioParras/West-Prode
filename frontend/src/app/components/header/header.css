@@ -1,6 +1,5 @@
 .main-header {
   width: 100%;
-  height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,9 +10,9 @@
 }
 
 .menu-btn {
-  background: none;    /* Quita el fondo gris */
-  border: none;        /* Quita el borde */
-  display: flex;       /* Ayuda a centrar el icono */
+  background: none; 
+  border: none; 
+  display: flex; 
   align-items: center;
   justify-content: center;
 }
@@ -25,9 +24,9 @@
 
 .logo h1  {
   cursor: pointer;
-  user-select: none;          /* Estándar */
-  -webkit-user-select: none;  /* Safari */
-  -moz-user-select: none;     /* Firefox */
-  -ms-user-select: none;      /* IE10+ */
+  user-select: none; 
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
   outline: none;
 }

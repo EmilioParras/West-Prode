@@ -22,10 +22,10 @@ const leagueNames = {
 
 const getGamesCompetition = async (competitionCode) => {
   try {
-    const hoySimulado = new Date('2025-12-27T10:00:00');
-    const startOfDay = new Date(hoySimulado);
+    const today = new Date();
+    const startOfDay = new Date(today);
     startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(hoySimulado);
+    const endOfDay = new Date(today);
     endOfDay.setHours(23, 59, 59, 999);
 
     const fullLeagueName = leagueNames[competitionCode.toUpperCase()]
