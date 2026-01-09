@@ -12,3 +12,11 @@
   </button>
 
 </header>
+
+<nav class="hamburguesa-menu" [class.open]="isMenuOpen">
+  <div class="secciones">
+    <span><a [routerLink]="['/rankings']" (click)="isMenuOpen = false">Rankings</a></span>
+    <span>Ejemplo 1</span>
+    <span>Ejemplo 2</span>
+  </div>
+</nav>

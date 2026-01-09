@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 95vh; /*El header ocupa 5vh*/
+  padding-top: 10vh;
 }
 
 .fecha-encabezado {

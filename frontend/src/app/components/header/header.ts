@@ -19,13 +19,13 @@ export class HeaderComponent {
   iconoUserProfile = faUser; 
 
   isMenuOpen = false;
-  isUserProfileOpen = false;
-  toggleHamburguer() {
+
+  toggleHamburguer() { // Lógica para abrir el menu hamburguesa
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  toggleUserProfile() {
-    this.isUserProfileOpen = !this.isUserProfileOpen;
+  toggleUserProfile() { // Lógica para abrir el perfil de usuario
+    
   }
 
 }

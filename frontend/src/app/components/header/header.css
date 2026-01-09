@@ -1,12 +1,25 @@
 .main-header {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px 10px;
   background-color: #1a1a1a;
   color: white;
+  width: 100%;
+  position: fixed;
+  top: 0;
   height: 5vh;
+  z-index: 100;
+}
+
+.logo h1  {
+  cursor: pointer;
+  user-select: none; 
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  outline: none;
+  margin: 0;
 }
 
 .menu-btn {
@@ -22,11 +35,49 @@
   color: #ffffff;
 }
 
-.logo h1  {
-  cursor: pointer;
-  user-select: none; 
-  -webkit-user-select: none; 
-  -moz-user-select: none; 
-  -ms-user-select: none; 
-  outline: none;
+/* Menú Hamburguesa */
+.hamburguesa-menu {
+  background-color: #1a1a1a;
+  padding: 10px 0px;
+  position: fixed;
+  top: 5vh;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  border-right: 2px solid #000000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 99;
 }
+
+.hamburguesa-menu.open {
+  transform: translateX(0);
+}
+
+.hamburguesa-menu .secciones {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
+  list-style: none;
+}
+
+.hamburguesa-menu span {
+  padding: 10px;
+  font-size: 20px;
+  padding-left: 20px;
+  background-color: #504d4d;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.hamburguesa-menu a {
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+
